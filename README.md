@@ -1,3 +1,8 @@
+# IBM DB0211EN Final Project: Building a Really Useful App with Bootstrap
+
+This was the final project for an IBM/edX course.
+
+Below is the content from the original repo for the project. The project files included in my repo include updated/completed components to meet the project submission requirements.
 
 **General Notes**
 
