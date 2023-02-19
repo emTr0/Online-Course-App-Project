@@ -1,6 +1,6 @@
-# IBM DB0211EN Final Project: Building a Really Useful App with Bootstrap
+# Online-Course-App-Project
 
-This was the final project for an IBM/edX course. Since completing this course, I'm now able to:
+This was the final project for the Building a Really Useful App with Bootstrap IBM/edX course. Since completing this course, I'm now able to:
 
 - Describe what is a database and how to model data
 - Compose SQL queries to insert, select, update, delete data in a database
