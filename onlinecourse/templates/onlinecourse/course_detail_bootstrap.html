@@ -98,7 +98,7 @@
                     <input class="btn btn-success btn-block" type="submit" value="Submit">
             </form> -->
 
-            <div id="exam" class="collapse">
+            <div id="exam">
                 {% if user.is_authenticated %}
                 <form id="questionform" action="{% url 'onlinecourse:submit' course.id %}" method="post">
                     {% csrf_token %}
@@ -123,8 +123,6 @@
                 </form>
                 {% endif %}
             </div>
-            <!--Check here to see more details Bootstrap checkbox
-             https://www.w3schools.com/bootstrap4/bootstrap_forms_inputs.asp-->
         </div>
     </body>
 

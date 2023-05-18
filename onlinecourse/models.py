@@ -102,6 +102,7 @@ class Enrollment(models.Model):
     # Has question content
     # Other fields and methods you would like to design
 class Question(models.Model):
+    lesson = models.ForeignKey('Lesson', on_delete=models.CASCADE)
     course = models.ForeignKey('Course', on_delete=models.CASCADE)
     question_text = models.TextField()
     grade_point = models.IntegerField()
@@ -114,7 +115,6 @@ class Question(models.Model):
             return True
         else:
             return False
-
 
 #  <HINT> Create a Choice Model with:
     # Used to persist choice content for a question

@@ -111,11 +111,12 @@ def enroll(request, course_id):
          # Add each selected choice object to the submission object
          # Redirect to show_exam_result with the submission id
 #def submit(request, course_id):
+
 def submit(request, course_id):
     if request.method == "POST":
         course = get_object_or_404(Course, pk=course_id)
         user = request.user
-        enrollment = get_object_or_404(Enrollment,user=user,course=course)
+        enrollment = get_object_or_404(Enrollment, user=user, course=course)
         submission = Submission.objects.create(enrollment=enrollment)
         choice_ids = extract_answers(request)
         for choice_id in choice_ids:
@@ -125,14 +126,14 @@ def submit(request, course_id):
         return HttpResponseRedirect(reverse(viewname='onlinecourse:show_exam_result', args=(course.id, submission.id,)))
 
 # <HINT> A example method to collect the selected choices from the exam form from the request object
-#def extract_answers(request):
-#    submitted_anwsers = []
-#    for key in request.POST:
-#        if key.startswith('choice'):
-#            value = request.POST[key]
-#            choice_id = int(value)
-#            submitted_anwsers.append(choice_id)
-#    return submitted_anwsers
+def extract_answers(request):
+    submitted_answers = []
+    for key in request.POST:
+        if key.startswith('choice'):
+            value = request.POST[key]
+            choice_id = int(value)
+            submitted_answers.append(choice_id)
+    return submitted_answers
 
 
 # <HINT> Create an exam result view to check if learner passed exam and show their question results and result for each question,
@@ -143,5 +144,22 @@ def submit(request, course_id):
         # Calculate the total score
 #def show_exam_result(request, course_id, submission_id):
 
-
-
+def show_exam_result(request, course_id, submission_id):
+    course = get_object_or_404(Course, pk=course_id)
+    submission = get_object_or_404(Submission, pk=submission_id)
+    selected_choice_ids = submission.choices.all()
+    total_score = 0
+    question_results = []
+    for question in course.question_set.all():
+        is_correct = question.is_get_score(selected_choice_ids)
+        if is_correct:
+            total_score += question.grade_point
+        question_results.append((question, is_correct))
+    context = {
+        'course': course,
+        'submission': submission,
+        'selected_ids': selected_choice_ids,
+        'total_score': total_score,
+        'question_results': question_results,
+    }
+    return render(request, 'onlinecourse/exam_result_bootstrap.html', context)
